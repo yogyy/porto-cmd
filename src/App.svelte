@@ -24,8 +24,9 @@
 
 <style>
   .container {
+    position: relative;
     min-height: 100dvh;
-    padding: 2rem 0.5rem;
+    padding: 2rem 0;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -34,7 +35,7 @@
   }
 
   .help {
-    color: var(--text-color);
+    color: hsl(var(--text-color));
   }
   @media (min-width: 640px) {
     .container {
@@ -44,6 +45,7 @@
   @media (min-width: 1024px) {
     .container {
       min-width: 60rem;
+      padding: 2rem 0;
     }
   }
 </style>
