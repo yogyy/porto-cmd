@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onDestroy, onMount } from "svelte";
   import { CONTENTS } from "../constants/content";
   import { escapeHTML } from "../lib/utils";
   import type { COMMAND } from "../types";
@@ -7,7 +8,8 @@
   let commands: { command: COMMAND; output: string }[] = [];
   let loading = false;
 
-  let terminalRef: HTMLDivElement;
+  let terminalRef: HTMLDivElement | HTMLButtonElement;
+  let inputElement: HTMLInputElement;
 
   const addCommand = async (command: COMMAND) => {
     let output: string | undefined;
@@ -23,28 +25,51 @@
 
     loading = false;
     commands = [...commands.slice(0, commands.length), { command, output }];
-    if (terminalRef) {
-      terminalRef.scrollTop = terminalRef.scrollHeight;
-    }
   };
+
+  function handleKeyDown(e: KeyboardEvent) {
+    if (document.activeElement !== inputElement && e.key === "/") {
+      e.preventDefault();
+      inputElement.focus();
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener("keydown", handleKeyDown);
+  });
+
+  onDestroy(() => {
+    document.removeEventListener("keydown", handleKeyDown);
+  });
 </script>
 
-<div
-  class="terminal"
-  bind:this={terminalRef}
->
-  {#each commands as { command, output }}
-    <div style="font-size: 14px;">
-      <Input {command} />
-      {#if output}
-        {@html output}
-      {/if}
-    </div>
-  {/each}
-  {#if !loading}
-    <Input onSubmit={(command) => addCommand(command)} />
-  {/if}
-</div>
+<button on:click={() => inputElement.focus()}>
+  <div
+    class="terminal"
+    bind:this={terminalRef}
+  >
+    {#each commands as { command, output }}
+      <div style="font-size: 14px;">
+        <Input {command} />
+        {#if output}
+          {@html output}
+        {/if}
+      </div>
+    {/each}
+    {#if !loading}
+      <Input
+        bind:inputElement
+        onSubmit={(command) => {
+          addCommand(command.toLowerCase().trim());
+          setTimeout(() => {
+            terminalRef.scrollTop = terminalRef.scrollHeight;
+            inputElement.focus();
+          });
+        }}
+      />
+    {/if}
+  </div>
+</button>
 
 <style>
   .terminal {
@@ -53,33 +78,38 @@
     max-height: calc(100vh - 160px);
     margin-bottom: 20px;
     overflow-y: scroll;
-    padding: 4px 6px;
-  }
 
-  .terminal::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url("/GIUU_lCaUAAkDhH.jpg") no-repeat;
-    background-position: center;
-    background-size: cover;
-    filter: brightness(0.55);
-    z-index: -1;
-  }
-
-  .terminal::-webkit-scrollbar {
-    width: 0;
-  }
-
-  .terminal {
     overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+
+    &:hover {
+      cursor: text;
+    }
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 
-  .terminal {
-    -ms-overflow-style: none;
+  button {
+    all: unset;
+    aspect-ratio: 16/9;
+    position: relative;
+    padding: 4px 6px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("/frieren.webp") no-repeat;
+      background-position: center;
+      background-size: cover;
+      filter: brightness(0.55);
+      z-index: -1;
+    }
   }
 
   @media (min-width: 1024px) {
