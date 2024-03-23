@@ -43,7 +43,12 @@
   });
 </script>
 
-<button on:click={() => inputElement.focus()}>
+<button
+  on:click={(e) => {
+    e.preventDefault();
+    inputElement.focus();
+  }}
+>
   <div
     class="terminal"
     bind:this={terminalRef}
@@ -60,7 +65,7 @@
       <Input
         bind:inputElement
         onSubmit={(command) => {
-          addCommand(command.toLowerCase().trim());
+          command.length !== 0 && addCommand(command.toLowerCase());
           setTimeout(() => {
             terminalRef.scrollTop = terminalRef.scrollHeight;
             inputElement.focus();
@@ -76,9 +81,8 @@
     position: relative;
     min-height: calc(100vh - 190px);
     max-height: calc(100vh - 160px);
-    margin-bottom: 20px;
     overflow-y: scroll;
-
+    padding: 4px 6px;
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
 
@@ -95,9 +99,10 @@
     all: unset;
     aspect-ratio: 16/9;
     position: relative;
-    padding: 4px 6px;
 
-    &::after {
+    background-color: hsl(var(--background-color));
+
+    /* &::after {
       content: "";
       position: absolute;
       top: 0;
@@ -109,7 +114,7 @@
       background-size: cover;
       filter: brightness(0.55);
       z-index: -1;
-    }
+    } */
   }
 
   @media (min-width: 1024px) {
