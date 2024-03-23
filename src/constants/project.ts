@@ -1,9 +1,34 @@
-const smallProjects = [
+import type { ProjectTypes } from "../types";
+
+const projects: ProjectTypes[] = [
   {
     title: "yogyy",
     description: "The website you are currently on",
     url: "https://yogyy.vercel.app",
     type: ["React", "Typescript", "Next JS", "Tailwind CSS", "Radix UI"],
+  },
+  {
+    title: "BurBir",
+    description:
+      "This project is a small-scale social media platform that aims to resemble Twitter in terms of functionality and design.",
+    github: "https://github.com/yogyy/burungbiru",
+    url: "https://burungbiru.vercel.app/",
+    type: [
+      "Next JS",
+      "Tailwind CSS",
+      "Radix UI",
+      "Tanstack Query",
+      "tRPC",
+      "upstash",
+    ],
+  },
+  {
+    title: "Notflox",
+    description:
+      "Movie list app built with NextJS. It consumes the TMDB API to display movies and TV shows.",
+    github: "https://github.com/yogyy/Netflix-Movie-App",
+    url: "https://notflox.vercel.app/",
+    type: ["Next JS", "Tailwind CSS", "Radix UI", "Tanstack Query", "MongoDB"],
   },
   {
     title: "Gallery",
@@ -80,4 +105,4 @@ const smallProjects = [
   },
 ];
 
-export { smallProjects };
+export { projects };

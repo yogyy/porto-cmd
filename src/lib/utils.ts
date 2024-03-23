@@ -1,5 +1,5 @@
 import { contacts } from "../constants/contact";
-import { smallProjects } from "../constants/project";
+import { projects } from "../constants/project";
 
 export const escapeHTML = (str: string) => {
   return str
@@ -13,7 +13,7 @@ export const escapeHTML = (str: string) => {
 export const getProjects = async () => {
   const projectHTML =
     `<h3>My Projects (You can scroll)</h3>` +
-    smallProjects
+    projects
       .map(
         (project) => `<div>
         <a href="${project.github || project.url}" target="_blank"><b>${
