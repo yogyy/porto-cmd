@@ -4,10 +4,6 @@ const COMMANDS = [
     description: "About Me",
   },
   {
-    command: "education",
-    description: "My Education",
-  },
-  {
     command: "skills",
     description: "My Tech Skills",
   },
