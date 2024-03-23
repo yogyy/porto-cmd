@@ -15,14 +15,11 @@ interface ContentFunctions {
 type COMMAND =
   | "help"
   | "about"
-  | "education"
   | "skills"
   | "projects"
   | "contact"
   | "resume"
   | "error"
-  | "blog"
-  | "youtube"
   | string;
 
 interface ProjectTypes {
