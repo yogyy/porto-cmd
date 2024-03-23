@@ -7,8 +7,6 @@ interface ContentFunctions {
   contact: () => Promise<any>;
   resume: () => string;
   error: (input: string | any) => string;
-  blog: () => string;
-  youtube: () => string;
   [key: string]:
     | (() => string)
     | (() => Promise<string>)
@@ -28,4 +26,12 @@ type COMMAND =
   | "youtube"
   | string;
 
-export type { COMMAND, ContentFunctions };
+interface ProjectTypes {
+  title: string;
+  description: string;
+  github?: string;
+  url?: string;
+  type: string[];
+}
+
+export type { COMMAND, ContentFunctions, ProjectTypes };
