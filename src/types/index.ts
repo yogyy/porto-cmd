@@ -1,7 +1,6 @@
 interface ContentFunctions {
   help: () => string;
   about: () => string;
-  education: () => string;
   skills: () => string;
   projects: () => Promise<string>;
   contact: () => Promise<any>;
